@@ -1,0 +1,21 @@
+## Best for formating API output
+## with the beautify option, you can see the number of elements is the output json file
+## with that, you can now employ dictionary or list index at occasion demands
+
+https://jsonformatter.org/
+
+
+## To format Hosted Zone for the purpose of migration to another aws account
+
+## Recall you will need to remove the default records i.e Ns, SOA records
+
+## I have called them default because they are authomatically created when you create the Domain
+
+https://jqplay.org/
+
+## Query to remove the unwanted records
+
+.ResourceRecordSets |{"Changes":[.[] | select(.Type!="SOA") |select(.Type!="NS") | {"Action":"CREATE","ResourceRecordSet":.}]}
+
+
+
