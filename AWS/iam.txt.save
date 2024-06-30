@@ -1,0 +1,26 @@
+### This document contain AWS IAM commands
+
+## Conigure credential
+aws configure
+
+## In case you want to manage multiple account on the same box
+
+aws configure --profile <profileName>
+
+### to check AWS profiles on your box
+
+aws configur list-profiles
+
+### storage location for config files
+
+~/.aws/config
+~/.aws/credentials
+
+### Check policies attached to a user, group, 
+
+aws iam list-attached-user-policies --user-name <username>
+
+## if you have more than one profile
+aws iam list-attached-user-policies --profile <profileName> --user-name <userName>
+
+aws iam list-attached-group-policies --profile <profileName> --group-name <groupName>
