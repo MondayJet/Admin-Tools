@@ -1,0 +1,10 @@
+instance_ids=$(aws ec2 describe-instances --profile <profile> --region <region> --query "Reservations[*].Instances[*].InstanceId" --output text)
+
+for instance_id in $instance_ids; do
+  aws ec2 modify-instance-attribute --instance-id $instance_id --profile <profile> --region <region> --no-disable-api-termination
+  if [ $? -eq 0 ]; then
+    echo "Termination protection enabled for instance $instance_id"
+  else
+    echo "Failed to enable termination protection for instance $instance_id" >&2
+  fi
+done

@@ -1,0 +1,35 @@
+### The fastest way to migrate hosted zones
+
+## Prepare json file of all the records in the hosted zone
+## Take the following steps
+
+#1. Copy the list of records in the hosted zone
+
+aws route53 list-resource-record-sets --profile <if-you-have-more-than-one> --hosted-zone-id <source_hostedzoneID> > Path\to\save\hostedzone-list.txt
+
+
+#2. format the spool record to remove NS and SOA, as those will be created automatically at the destination aws env
+
+## visit
+https://jqplay.org/
+
+## in the query row supply
+.ResourceRecordSets |{"Changes":[.[] | select(.Type!="SOA") |select(.Type!="NS") | {"Action":"CREATE","ResourceRecordSet":.}]}
+
+## in the json field paste the pulled records
+
+## the formatted output will be displayed on the output field6
+###copy the output and save it as i.e formatted_hosted_zone_records.txt
+
+###then copy the path of the formatted record file
+
+## Create the Domain in the destination AWS account
+
+## then executed the command below
+
+aws route53 change-resource-record-sets --hosted-zone-id <destination_hosted_zone-Id> --profile <your-profile> --change-batch file://path\to\formatted_hosted_zone_record_file
+
+
+
+### profile is only needed if you manage more than one account on same console
+### You must have necesary permision on both account to perform the migration, otherwise it will fail
